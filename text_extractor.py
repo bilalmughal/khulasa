@@ -1,19 +1,46 @@
+"""
+Text Extraction Class
+
+This module defines the TextExtractor class, which is responsible for
+extracting text from PDF and DOCX files.
+
+Author: Mirza Bilal
+"""
+
 import fitz
 from docx import Document
 from khulasa_document import KhDocument
 
+
 class TextExtractor:
     """
-    a
+    TextExtractor class for extracting text from PDF and DOCX files.
+
+    Attributes:
+        None
+
+    Methods:
+        __init__(): Initializes the TextExtractor.
+        parse_file(file_path): Parses the input file and extracts text.
+        _parse_pdf(pdf_path): Parses a PDF file and extracts text.
+        _parse_docx(docx_file): Parses a DOCX file and extracts text.
     """
-    def __init__(self):
-        pass
+
+    # def __init__(self):
+    #     """
+    #     Initializes the TextExtractor.
+    #     """
+    #     pass
 
     def parse_file(self, file_path):
         """
-        a
+        Parse the input file and extract text.
+
+        :param file_path: The path to the input file.
+        :return: A KhDocument object containing the extracted text.
         """
-        file_extension = file_path.split(".")[-1].lower()  # Extract and convert to lowercase
+        file_extension = file_path.split(
+            ".")[-1].lower()  # Extract and convert to lowercase
 
         # Check the file extension
         if file_extension == "pdf":
@@ -26,8 +53,13 @@ class TextExtractor:
             print("Unsupported file format.")
             return None
 
-
     def _parse_pdf(self, pdf_path):
+        """
+        Parse a PDF file and extract text.
+
+        :param pdf_path: The path to the PDF file.
+        :return: A KhDocument object containing the extracted text.
+        """
         pdf = fitz.open(pdf_path)
         document = KhDocument()
         current_page = None  # Initialize to None
@@ -44,6 +76,12 @@ class TextExtractor:
         return document
 
     def _parse_docx(self, docx_file):
+        """
+        Parse a DOCX file and extract text.
+
+        :param docx_file: The path to the DOCX file.
+        :return: A KhDocument object containing the extracted text.
+        """
         document = Document(docx_file)
         kh_document = KhDocument()
         current_page = None
@@ -64,4 +102,3 @@ class TextExtractor:
                 current_page.add_block(paragraph.text)
 
         return kh_document
-    
